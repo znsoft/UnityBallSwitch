@@ -18,6 +18,16 @@ public class Balls : MonoBehaviour
 	
 	}
 
+	void OnCollisionEnter (Collision col)
+	{
+		AudioSource touchSound = null;
+		touchSound = col.collider.gameObject.GetComponent<AudioSource> ();
+		if(touchSound==null)touchSound = col.gameObject.GetComponent<AudioSource> ();
+		if(touchSound==null)touchSound = balls [currentBall].GetComponent<AudioSource> ();
+		if(touchSound==null)touchSound = transform.gameObject.GetComponent<AudioSource> ();
+		if(touchSound!=null)touchSound.Play ();
+	}
+
 	void SetBall (int ballNum)
 	{
 		myRigidBody.useGravity = true;
