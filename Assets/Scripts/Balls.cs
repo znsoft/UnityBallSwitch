@@ -26,6 +26,12 @@ public class Balls : MonoBehaviour
 		if(touchSound==null)touchSound = balls [currentBall].GetComponent<AudioSource> ();
 		if(touchSound==null)touchSound = transform.gameObject.GetComponent<AudioSource> ();
 		if(touchSound!=null)touchSound.Play ();
+		if (col.collider.gameObject.name == "Exit") {
+			myRigidBody.useGravity = false;
+			myRigidBody.freezeRotation = true;
+			myRigidBody.velocity = new Vector3(0.0f,0.0f,0.0f);
+
+		}
 	}
 
 	void SetBall (int ballNum)
