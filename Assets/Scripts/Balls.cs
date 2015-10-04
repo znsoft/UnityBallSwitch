@@ -34,6 +34,11 @@ public class Balls : MonoBehaviour
 		}
 	}
 
+	void RestartLevel(){
+	
+		Application.LoadLevel (Application.loadedLevelName);
+	}
+
 	void SetBall (int ballNum)
 	{
 		myRigidBody.useGravity = true;
