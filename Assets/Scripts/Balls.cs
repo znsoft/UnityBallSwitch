@@ -4,9 +4,14 @@ using System.Collections;
 public class Balls : MonoBehaviour
 {
 	public GameObject[] balls;
+	public float[] mass;
+	public float[] drag;
 	int currentBall = 0;
 	Rigidbody myRigidBody;
 	// Use this for initialization
+	enum Ball{	Steel, Glass, Wire, Plastic, Stone	}
+
+
 	void Start ()
 	{
 		myRigidBody = this.GetComponent<Rigidbody> ();
@@ -28,7 +33,7 @@ public class Balls : MonoBehaviour
 		if(touchSound!=null)touchSound.Play ();
 		if (col.collider.gameObject.name == "Exit") {
 			myRigidBody.useGravity = false;
-			myRigidBody.freezeRotation = true;
+			//myRigidBody.freezeRotation = true;
 			myRigidBody.velocity = new Vector3(0.0f,0.0f,0.0f);
 
 		}
@@ -46,6 +51,8 @@ public class Balls : MonoBehaviour
 			return;
 		balls [currentBall].SetActive (false);
 		balls [ballNum].SetActive (true);
+		myRigidBody.mass = mass [ballNum];
+		myRigidBody.drag = drag [ballNum];
 		currentBall = ballNum;
 	}
 
@@ -53,26 +60,24 @@ public class Balls : MonoBehaviour
 	{
 		SetBall (0);
 
+		Debug.Log ((int)Ball.Glass);
+
 	}
 
 	public void SetMetal ()
 	{
 		SetBall (1);
-
+		Debug.Log ((int)Ball.Plastic);
 	}
 
 	public void SetPaper ()
 	{
 		SetBall (2);
-
-		
 	}
 
 	public void SetSmoke ()
 	{
 		SetBall (3);
-
-		
 	}
 
 }
