@@ -20,7 +20,12 @@ public class Balls : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
+		Vector3 myVelocity = myRigidBody.velocity;
+		var gravity = Physics.gravity;
+		float t = 3;//forecast time
+		Vector3 futurePosition = myVelocity * t + (gravity * t * t) / 2;
+		Debug.DrawRay (transform.position, futurePosition, Color.red);
+
 	}
 
 	void OnCollisionEnter (Collision col)
