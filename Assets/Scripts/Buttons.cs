@@ -5,6 +5,11 @@ public class Buttons : MonoBehaviour {
 	public GameObject allBalls;
 	// Use this for initialization
 	void Start () {
+		var tempBalls = Instantiate<GameObject> (allBalls);
+		//allBalls.SetActive (false);
+		//tempBalls.SendMessage ("SetMetal");
+
+
 	}
 
 	// Update is called once per frame

@@ -14,6 +14,7 @@ public class Balls : MonoBehaviour
 
 	void Start ()
 	{
+		Physics.gravity.Set (0, 1000, 0);
 		myRigidBody = this.GetComponent<Rigidbody> ();
 	}
 	
@@ -25,6 +26,15 @@ public class Balls : MonoBehaviour
 		float t = 3;//forecast time
 		Vector3 futurePosition = myVelocity * t + (gravity * t * t) / 2;
 		Debug.DrawRay (transform.position, futurePosition, Color.red);
+
+
+
+	}
+
+
+	void OnCollisionStay (Collision col)
+	{
+		//col.gameObject.transform.position.
 
 	}
 
