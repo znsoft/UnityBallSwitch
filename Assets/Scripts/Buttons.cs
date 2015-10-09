@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Buttons : MonoBehaviour {
-	public GameObject allBalls;
+	public GameObject playerBalls;
+	public GameObject botBalls;
 	// Use this for initialization
 	void Start () {
 	}
@@ -13,9 +14,18 @@ public class Buttons : MonoBehaviour {
 			Application.Quit ();
 	}
 
-	public void AnyButtonClick(string buttonMethod){
-		allBalls.SendMessage (buttonMethod);
+	public void AnyBallClick(GameObject ball){
+		playerBalls.SendMessage( "SetPlayerBall", ball.name);
 
 	} 
+
+	public void AnyButtonClickStartMethod(string methodName){
+		playerBalls.SendMessage( methodName);
+	}
+
+	public void ReloadLevel ()
+	{
+		Application.LoadLevel (Application.loadedLevelName);
+	}
 
 }
