@@ -1,11 +1,19 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Cameras;
 
 public class Buttons : MonoBehaviour {
-	public GameObject playerBalls;
+	public GameObject playerBall;
 	public GameObject botBalls;
+	GameObject playerBalls;
+	public GameObject myCamera;
 	// Use this for initialization
-	void Start () {
+	IEnumerator	 Start() {
+		botBalls.SendMessage ("SetBotBall", true);
+		botBalls.SendMessage ("SetPlayerBall", "Paper");
+		yield return new WaitForSeconds(1);
+		playerBalls = Instantiate (playerBall);
+		myCamera.GetComponent<AutoCam> ().SetTarget( playerBalls.transform);
 	}
 
 	// Update is called once per frame
@@ -14,8 +22,9 @@ public class Buttons : MonoBehaviour {
 			Application.Quit ();
 	}
 
-	public void AnyBallClick(GameObject ball){
-		playerBalls.SendMessage( "SetPlayerBall", ball.name);
+	public void AnyBallClick(GameObject button){
+
+		playerBalls.SendMessage( "SetPlayerBall", button.name);
 
 	} 
 

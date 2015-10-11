@@ -9,9 +9,11 @@ public class Balls : MonoBehaviour
 	Rigidbody myRigidBody;
 	private Dictionary<string,GameObject> ball;
 	string currentBallName;
+	bool isBot;
 
 	void Start ()
 	{
+		isBot = false;
 		myRigidBody = this.GetComponent<Rigidbody> ();
 		ball = this.GetComponentsInChildren<Collider> ().ToDictionary (s => s.gameObject.name, (s) => {
 			s.gameObject.SetActive (false);
@@ -19,7 +21,7 @@ public class Balls : MonoBehaviour
 		var first = ball.Values.ElementAt<GameObject> (0);
 		currentBallName = first.name;
 		first.SetActive (true);
-		Debug.Log ("Start balls " + currentBallName);
+		Debug.Log ("Start balls now");
 	}
 	
 	// Update is called once per frame
@@ -60,6 +62,10 @@ public class Balls : MonoBehaviour
 		}
 	}
 
+	void SetBotBall(bool isBot){
+		this.isBot = isBot;
+	}
+
 	void RestartLevel ()
 	{
 		Application.LoadLevel (Application.loadedLevelName);
@@ -67,6 +73,7 @@ public class Balls : MonoBehaviour
 
 	public void SetPlayerBall (string ballName)
 	{
+		Debug.Log ("ball " + ballName);
 		myRigidBody.useGravity = true;
 		if (currentBallName == ballName)
 			return;
@@ -74,7 +81,5 @@ public class Balls : MonoBehaviour
 		ball [ballName].SetActive (true);
 		currentBallName = ballName;	
 		Debug.Log (currentBallName);
-
-
 	}
 }
