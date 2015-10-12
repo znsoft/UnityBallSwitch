@@ -27,10 +27,15 @@ namespace UnityStandardAssets.Cameras
             {
                 FindAndTargetPlayer();
             }
-            if (m_Target == null) return;
-            targetRigidbody = m_Target.GetComponent<Rigidbody>();
+			FindRigidbody ();
         }
 
+		void FindRigidbody(){
+			if (m_Target == null) return;
+			if (targetRigidbody == null)
+			targetRigidbody = m_Target.GetComponent<Rigidbody>();
+		
+		}
 
         private void FixedUpdate()
         {
@@ -39,7 +44,8 @@ namespace UnityStandardAssets.Cameras
             if (m_AutoTargetPlayer && (m_Target == null || !m_Target.gameObject.activeSelf))
             {
                 FindAndTargetPlayer();
-            }
+			}
+			FindRigidbody ();
             if (m_UpdateType == UpdateType.FixedUpdate)
             {
                 FollowTarget(Time.deltaTime);
@@ -55,6 +61,7 @@ namespace UnityStandardAssets.Cameras
             {
                 FindAndTargetPlayer();
             }
+			FindRigidbody ();
             if (m_UpdateType == UpdateType.LateUpdate)
             {
                 FollowTarget(Time.deltaTime);
@@ -70,6 +77,7 @@ namespace UnityStandardAssets.Cameras
             {
                 FindAndTargetPlayer();
             }
+			FindRigidbody ();
             if (m_UpdateType == UpdateType.ManualUpdate)
             {
                 FollowTarget(Time.deltaTime);
@@ -93,6 +101,7 @@ namespace UnityStandardAssets.Cameras
         public virtual void SetTarget(Transform newTransform)
         {
             m_Target = newTransform;
+			FindRigidbody ();
         }
 
 

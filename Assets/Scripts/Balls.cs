@@ -21,7 +21,7 @@ public class Balls : MonoBehaviour
 		var first = ball.Values.ElementAt<GameObject> (0);
 		currentBallName = first.name;
 		first.SetActive (true);
-		Debug.Log ("Start balls now");
+		//Debug.Log ("Start balls now "+ this.name);
 	}
 	
 	// Update is called once per frame
@@ -45,6 +45,8 @@ public class Balls : MonoBehaviour
 
 	void OnCollisionEnter (Collision col)
 	{
+		if (isBot)
+			return;
 		AudioSource touchSound = null;
 		touchSound = col.collider.gameObject.GetComponent<AudioSource> ();
 		if (touchSound == null)
@@ -64,6 +66,9 @@ public class Balls : MonoBehaviour
 
 	void SetBotBall(bool isBot){
 		this.isBot = isBot;
+		if (isBot)
+			foreach (var Audio in this.GetComponents<AudioSource>())
+				Audio.Stop ();
 	}
 
 	void RestartLevel ()
@@ -73,7 +78,7 @@ public class Balls : MonoBehaviour
 
 	public void SetPlayerBall (string ballName)
 	{
-		Debug.Log ("ball " + ballName);
+		Debug.Log ("ball " + ballName+ this.name);
 		myRigidBody.useGravity = true;
 		if (currentBallName == ballName)
 			return;
