@@ -21,7 +21,7 @@ public class Balls : MonoBehaviour
 		var first = ball.Values.ElementAt<GameObject> (0);
 		currentBallName = first.name;
 		first.SetActive (true);
-		//Debug.Log ("Start balls now "+ this.name);
+		Debug.Log ("Start balls now "+ this.name);
 	}
 	
 	// Update is called once per frame
@@ -69,6 +69,7 @@ public class Balls : MonoBehaviour
 		if (isBot)
 			foreach (var Audio in this.GetComponents<AudioSource>())
 				Audio.Stop ();
+		Debug.Log ("set bot "+ this.name);
 	}
 
 	void RestartLevel ()

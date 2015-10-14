@@ -9,9 +9,11 @@ public class Buttons : MonoBehaviour {
 	public GameObject myCamera;
 	Rigidbody botRigidBody;
 	public GameObject[] prefabs;
+	Vector3 startPoint;
 
 	// Use this for initialization
 	IEnumerator	 Start() {
+		startPoint = botBalls.transform.position;
 		botBalls.SendMessage ("SetBotBall", true);
 		botBalls.SendMessage ("SetPlayerBall", "Paper");
 		botRigidBody = botBalls.GetComponent<Rigidbody> ();
@@ -37,8 +39,9 @@ IEnumerator RepeatAction ( GameObject botBall)
 		if (botVelocity.magnitude > 7.0F) {
 			GameObject block = Instantiate<GameObject> (prefabs [Random.Range(0,prefabs.GetUpperBound(0))]);
 			block.transform.position = botBall.transform.position + futurePosition;
-			block.transform.rotation = Random.rotation;
-			block.transform.rotation.SetLookRotation (botBall.transform.position);
+			block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
+			//block.transform.rotation.SetLookRotation (startPoint);
+			//block.transform.rotation.SetLookRotation (botBall.transform.position);
 		}
 		//===========
 		yield return new WaitForSeconds (Random.Range(1.5F ,3));
