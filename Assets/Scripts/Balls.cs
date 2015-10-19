@@ -69,7 +69,7 @@ public class Balls : MonoBehaviour
 		if (isBot)
 			foreach (var Audio in this.GetComponents<AudioSource>())
 				Audio.Stop ();
-		Debug.Log ("set bot "+ this.name);
+		//Debug.Log ("set bot "+ this.name);
 	}
 
 	void RestartLevel ()
@@ -86,6 +86,6 @@ public class Balls : MonoBehaviour
 		ball [currentBallName].SetActive (false);
 		ball [ballName].SetActive (true);
 		currentBallName = ballName;	
-		Debug.Log (currentBallName);
+		//Debug.Log (currentBallName);
 	}
 }

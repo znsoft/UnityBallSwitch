@@ -13,6 +13,7 @@ public class Buttons : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator	 Start() {
+		yield return new WaitForSeconds(1);
 		startPoint = botBalls.transform.position;
 		botBalls.SendMessage ("SetBotBall", true);
 		botBalls.SendMessage ("SetPlayerBall", "Paper");
@@ -36,11 +37,13 @@ IEnumerator RepeatAction ( GameObject botBall)
 		Vector3 futurePosition = botVelocity * t + (gravity * t * t) / 2;
 		//Debug.DrawRay (transform.position, futurePosition, Color.red);
 		//GenerateBlock(botBalls,
+		if((botVelocity.y>0 && botBall.transform.position.y>0)||
+		   (botVelocity.y <0 && botBall.transform.position.y <0))
 		if (botVelocity.magnitude > 7.0F) {
 			GameObject block = Instantiate<GameObject> (prefabs [Random.Range(0,prefabs.GetUpperBound(0))]);
 			block.transform.position = botBall.transform.position + futurePosition;
-			block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
-			//block.transform.rotation.SetLookRotation (startPoint);
+			//block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
+			block.transform.rotation.SetLookRotation (Vector3.up);
 			//block.transform.rotation.SetLookRotation (botBall.transform.position);
 		}
 		//===========
