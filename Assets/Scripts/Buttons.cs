@@ -40,14 +40,14 @@ IEnumerator RepeatAction ( GameObject botBall)
 		if((botVelocity.y>0 && botBall.transform.position.y>0)||
 		   (botVelocity.y <0 && botBall.transform.position.y <0))
 		if (botVelocity.magnitude > 7.0F) {
-			GameObject block = Instantiate<GameObject> (prefabs [Random.Range(0,prefabs.GetUpperBound(0))]);
+			GameObject block = Instantiate<GameObject> (prefabs [0]);//Random.Range(0,prefabs.GetUpperBound(0))]);
 			block.transform.position = botBall.transform.position + futurePosition;
-			//block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
-			block.transform.rotation.SetLookRotation (Vector3.up);
+			block.transform.rotation = Quaternion.LookRotation(futurePosition);//Random.rotation;
+			//block.transform.rotation.SetLookRotation (Vector3.up);
 			//block.transform.rotation.SetLookRotation (botBall.transform.position);
 		}
 		//===========
-		yield return new WaitForSeconds (Random.Range(1.5F ,3));
+		yield return new WaitForSeconds (1);//Random.Range(1.0F ,3));
 		this.StartCoroutine ("RepeatAction", botBall);
 	}
 

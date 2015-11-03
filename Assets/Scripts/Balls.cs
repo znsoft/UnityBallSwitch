@@ -6,10 +6,12 @@ using System.Linq;
 
 public class Balls : MonoBehaviour
 {
+	public GameObject[] rings;
 	Rigidbody myRigidBody;
 	private Dictionary<string,GameObject> ball;
 	string currentBallName;
-	bool isBot;
+	public bool isBot = false;
+	public GameObject prevRing;
 
 	void Start ()
 	{
@@ -32,9 +34,32 @@ public class Balls : MonoBehaviour
 		float t = 1;//forecast time
 		Vector3 futurePosition = myVelocity * t + (gravity * t * t) / 2;
 		Debug.DrawRay (transform.position, futurePosition, Color.red);
+		if (!isBot)
+			return;
+		if (prevRing == null)
+			GenerateNewRing ();
 
 
+	}
 
+	void GenerateNewRing ()
+	{
+		prevRing = Instantiate<GameObject> (rings[0]);
+		prevRing.transform.position = transform.position;
+		Vector3 directionPos = CalculateFuturePosition ();
+		//directionPos = Vector3.Cross (directionPos, Vector3.up);
+		prevRing.transform.rotation = Quaternion.LookRotation(directionPos);//Random.rotation;
+		//prevRing.transform.rotation.SetLookRotation (directionPos);
+		//block.transform.rotation.SetLookRotation (botBall.transform.position);
+
+	}
+
+	Vector3 CalculateFuturePosition ()
+	{
+		Vector3 botVelocity = myRigidBody.velocity;
+		var gravity = Physics.gravity;
+		float t = 1;//forecast time
+		return botVelocity * t + (gravity * t * t) / 2;
 	}
 
 	void OnCollisionStay (Collision col)
