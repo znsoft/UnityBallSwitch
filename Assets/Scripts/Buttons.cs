@@ -13,6 +13,7 @@ public class Buttons : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator	 Start() {
+		yield return new WaitForSeconds(1);
 		startPoint = botBalls.transform.position;
 		botBalls.SendMessage ("SetBotBall", true);
 		botBalls.SendMessage ("SetPlayerBall", "Paper");
@@ -20,7 +21,7 @@ public class Buttons : MonoBehaviour {
 		yield return new WaitForSeconds(1);
 		playerBalls = Instantiate (playerBall);
 		myCamera.GetComponent<AutoCam> ().SetTarget( playerBalls.transform);
-		this.StartCoroutine ("RepeatAction", botBalls);
+		//this.StartCoroutine ("RepeatAction", botBalls); //генерация случайного уровня
 		Random.seed = 0;
 	}
 
@@ -39,7 +40,8 @@ IEnumerator RepeatAction ( GameObject botBall)
 		if (botVelocity.magnitude > 7.0F) {
 			GameObject block = Instantiate<GameObject> (prefabs [Random.Range(0,prefabs.GetUpperBound(0))]);
 			block.transform.position = botBall.transform.position + futurePosition;
-			block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
+			//block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
+			block.transform.rotation = Random.rotation;
 			//block.transform.rotation.SetLookRotation (startPoint);
 			//block.transform.rotation.SetLookRotation (botBall.transform.position);
 		}
