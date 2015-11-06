@@ -13,9 +13,9 @@ public class Buttons : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator	 Start() {
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(1);//костыль - бывает что этот скрипт загружается раньше чем бот и в результате прога крашится 
 		startPoint = botBalls.transform.position;
-		botBalls.SendMessage ("SetBotBall", true);
+		//botBalls.SendMessage ("SetBotBall", true);
 		botBalls.SendMessage ("SetPlayerBall", "Paper");
 		botRigidBody = botBalls.GetComponent<Rigidbody> ();
 		yield return new WaitForSeconds(1);

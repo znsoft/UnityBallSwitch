@@ -10,12 +10,13 @@ public class Balls : MonoBehaviour
 	Rigidbody myRigidBody;
 	private Dictionary<string,GameObject> ball;
 	string currentBallName;
-	public bool isBot = false;
+	public bool isBot;
 	public GameObject prevRing;
+
 
 	void Start ()
 	{
-		isBot = false;
+		//isBot = false;
 		myRigidBody = this.GetComponent<Rigidbody> ();
 		ball = this.GetComponentsInChildren<Collider> ().ToDictionary (s => s.gameObject.name, (s) => {
 			s.gameObject.SetActive (false);
@@ -24,6 +25,13 @@ public class Balls : MonoBehaviour
 		currentBallName = first.name;
 		first.SetActive (true);
 		Debug.Log ("Start balls now "+ this.name);
+		if (!isBot)
+			return;
+	//	gameObject.AddComponent<MeshFilter>();
+	//	gameObject.AddComponent<MeshRenderer>();
+
+
+
 	}
 	
 	// Update is called once per frame
