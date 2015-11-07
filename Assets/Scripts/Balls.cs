@@ -77,8 +77,7 @@ public class Balls : MonoBehaviour
 
 	void OnCollisionEnter (Collision col)
 	{
-		if (isBot)
-			return;
+		//if (isBot)			return;
 		AudioSource touchSound = null;
 		touchSound = col.collider.gameObject.GetComponent<AudioSource> ();
 		if (touchSound == null)
