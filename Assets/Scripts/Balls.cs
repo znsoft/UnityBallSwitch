@@ -44,8 +44,7 @@ public class Balls : MonoBehaviour
 		Debug.DrawRay (transform.position, futurePosition, Color.red);
 		if (!isBot)
 			return;
-		if (prevRing == null)
-			GenerateNewRing ();
+		//if (prevRing == null)		GenerateNewRing ();
 
 
 	}
