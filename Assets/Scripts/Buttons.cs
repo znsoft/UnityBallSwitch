@@ -11,6 +11,8 @@ public class Buttons : MonoBehaviour {
 	public GameObject[] prefabs;
 	Vector3 startPoint;
 
+	public bool paused = false;
+
 	// Use this for initialization
 	IEnumerator	 Start() {
 		startPoint = botBalls.transform.position;
@@ -59,6 +61,11 @@ IEnumerator RepeatAction ( GameObject botBall)
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape))
 			Application.Quit ();
+	}
+
+	public void PlayPauseButton(){
+		paused = !paused;
+		Time.timeScale = paused ? 0 : 1;
 	}
 
 	public void AnyBallClick(GameObject button){
