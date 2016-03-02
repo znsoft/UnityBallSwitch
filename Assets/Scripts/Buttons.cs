@@ -10,11 +10,13 @@ public class Buttons : MonoBehaviour {
 	Rigidbody botRigidBody;
 	public GameObject[] prefabs;
 	Vector3 startPoint;
+	public GameObject controlPanel;
 
 	public bool paused = false;
 
 	// Use this for initialization
 	IEnumerator	 Start() {
+		controlPanel.SetActive (paused);
 		startPoint = botBalls.transform.position;
 		//botBalls.SendMessage ("SetBotBall", true);
 		yield return new WaitForSeconds(1);//костыль - бывает что этот скрипт загружается раньше чем бот и в результате прога крашится на следующей команде
@@ -65,6 +67,8 @@ IEnumerator RepeatAction ( GameObject botBall)
 
 	public void PlayPauseButton(){
 		paused = !paused;
+		controlPanel.SetActive (paused);
+
 		Time.timeScale = paused ? 0 : 1;
 	}
 
