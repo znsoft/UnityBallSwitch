@@ -108,9 +108,15 @@ public class Balls : MonoBehaviour
 		Application.LoadLevel (Application.loadedLevelName);
 	}
 
+	public void EditPlayerBall (string ballName)
+	{
+		GenerateNewRing ();
+	}
+
+
 	public void SetPlayerBall (string ballName)
 	{
-		Debug.Log ("ball " + ballName+ this.name);
+	//	Debug.Log ("ball " + ballName+ this.name);
 		myRigidBody.useGravity = true;
 		if (currentBallName == ballName)
 			return;

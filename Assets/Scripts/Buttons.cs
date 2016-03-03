@@ -59,6 +59,7 @@ IEnumerator RepeatAction ( GameObject botBall)
 
 
 
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape))
@@ -73,7 +74,9 @@ IEnumerator RepeatAction ( GameObject botBall)
 	}
 
 	public void AnyBallClick(GameObject button){
-
+		if (paused) {
+			playerBalls.SendMessage( "EditPlayerBall", button.name);
+			return; }
 		playerBalls.SendMessage( "SetPlayerBall", button.name);
 
 	} 
@@ -81,6 +84,8 @@ IEnumerator RepeatAction ( GameObject botBall)
 	public void AnyButtonClickStartMethod(string methodName){
 		playerBalls.SendMessage( methodName);
 	}
+
+
 
 	public void ReloadLevel ()
 	{
