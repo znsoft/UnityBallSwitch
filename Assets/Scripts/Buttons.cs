@@ -10,18 +10,22 @@ public class Buttons : MonoBehaviour {
 	Rigidbody botRigidBody;
 	public GameObject[] prefabs;
 	Vector3 startPoint;
+	public GameObject controlPanel;
+
+	public bool paused = false;
 
 	// Use this for initialization
 	IEnumerator	 Start() {
-		yield return new WaitForSeconds(1);
+		controlPanel.SetActive (paused);
 		startPoint = botBalls.transform.position;
-		botBalls.SendMessage ("SetBotBall", true);
+		//botBalls.SendMessage ("SetBotBall", true);
+		yield return new WaitForSeconds(1);//костыль - бывает что этот скрипт загружается раньше чем бот и в результате прога крашится на следующей команде
 		botBalls.SendMessage ("SetPlayerBall", "Paper");
 		botRigidBody = botBalls.GetComponent<Rigidbody> ();
 		yield return new WaitForSeconds(1);
 		playerBalls = Instantiate (playerBall);
 		myCamera.GetComponent<AutoCam> ().SetTarget( playerBalls.transform);
-		this.StartCoroutine ("RepeatAction", botBalls);
+		//this.StartCoroutine ("RepeatAction", botBalls);
 		Random.seed = 0;
 	}
 
@@ -40,16 +44,17 @@ IEnumerator RepeatAction ( GameObject botBall)
 		if((botVelocity.y>0 && botBall.transform.position.y>0)||
 		   (botVelocity.y <0 && botBall.transform.position.y <0))
 		if (botVelocity.magnitude > 7.0F) {
-			GameObject block = Instantiate<GameObject> (prefabs [Random.Range(0,prefabs.GetUpperBound(0))]);
+			GameObject block = Instantiate<GameObject> (prefabs [0]);//Random.Range(0,prefabs.GetUpperBound(0))]);
 			block.transform.position = botBall.transform.position + futurePosition;
-			//block.transform.rotation = Quaternion.LookRotation(startPoint);//Random.rotation;
-			block.transform.rotation.SetLookRotation (Vector3.up);
+			block.transform.rotation = Quaternion.LookRotation(futurePosition);//Random.rotation;
+			//block.transform.rotation.SetLookRotation (Vector3.up);
 			//block.transform.rotation.SetLookRotation (botBall.transform.position);
 		}
 		//===========
-		yield return new WaitForSeconds (Random.Range(1.5F ,3));
+		yield return new WaitForSeconds (1);//Random.Range(1.0F ,3));
 		this.StartCoroutine ("RepeatAction", botBall);
 	}
+
 
 
 
@@ -61,8 +66,17 @@ IEnumerator RepeatAction ( GameObject botBall)
 			Application.Quit ();
 	}
 
-	public void AnyBallClick(GameObject button){
+	public void PlayPauseButton(){
+		paused = !paused;
+		controlPanel.SetActive (paused);
 
+		Time.timeScale = paused ? 0 : 1;
+	}
+
+	public void AnyBallClick(GameObject button){
+		if (paused) {
+			playerBalls.SendMessage( "EditPlayerBall", button.name);
+			return; }
 		playerBalls.SendMessage( "SetPlayerBall", button.name);
 
 	} 
@@ -70,6 +84,8 @@ IEnumerator RepeatAction ( GameObject botBall)
 	public void AnyButtonClickStartMethod(string methodName){
 		playerBalls.SendMessage( methodName);
 	}
+
+
 
 	public void ReloadLevel ()
 	{
