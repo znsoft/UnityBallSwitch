@@ -40,6 +40,10 @@ namespace UnityStandardAssets.Cameras
 			m_TransformTargetRot = transform.localRotation;
         }
 
+		void OnGui(){
+			Update ();
+
+		}
 
         protected void Update()
         {
@@ -69,13 +73,14 @@ namespace UnityStandardAssets.Cameras
 
         private void HandleRotationMovement()
         {
-			if(Time.timeScale < float.Epsilon)
-			return;
+			float deltaTime = Time.deltaTime;
+			if (Time.timeScale < float.Epsilon)
+				deltaTime = 1;//	return;
 
             // Read the user input
             var x = CrossPlatformInputManager.GetAxis("Mouse X");
             var y = CrossPlatformInputManager.GetAxis("Mouse Y");
-
+			//Debug.LogFormat ("{0} , {1}", x, y);
             // Adjust the look angle by an amount proportional to the turn speed and horizontal input.
             m_LookAngle += x*m_TurnSpeed;
 
@@ -102,8 +107,9 @@ namespace UnityStandardAssets.Cameras
 
 			if (m_TurnSmoothing > 0)
 			{
-				m_Pivot.localRotation = Quaternion.Slerp(m_Pivot.localRotation, m_PivotTargetRot, m_TurnSmoothing * Time.deltaTime);
-				transform.localRotation = Quaternion.Slerp(transform.localRotation, m_TransformTargetRot, m_TurnSmoothing * Time.deltaTime);
+				m_Pivot.localRotation = Quaternion.Slerp(m_Pivot.localRotation, m_PivotTargetRot, m_TurnSmoothing * deltaTime);
+				transform.localRotation = Quaternion.Slerp(transform.localRotation, m_TransformTargetRot, m_TurnSmoothing * deltaTime);
+				//Debug.LogFormat ("{0} , {1}", x, y);
 			}
 			else
 			{
