@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
 	private Vector3 m_Move;
 	private bool m_Jump, pause = false;                      // the world-relative desired move direction, calculated from the camForward and user input.
 	public GameObject myBody;
+	public GameObject canvas;
+	public GameObject butPrefab;
 	Rigidbody myRigidBody;
 	//GameObject line;
 	LineRenderer line;
@@ -32,6 +34,8 @@ public class PlayerControl : MonoBehaviour {
 		line.enabled = pause;
 		if (pause) {
 			DrawWay();
+
+			GameObject t = Instantiate(butPrefab);
 		
 		}
 		if (Input.GetKeyDown (KeyCode.Escape))
@@ -59,5 +63,11 @@ public class PlayerControl : MonoBehaviour {
 
 
 	}
+
+	public void ItemSelect(){
+
+
+	}
+
 }
 
