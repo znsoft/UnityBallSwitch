@@ -23,6 +23,8 @@ public class PlayerControl : MonoBehaviour
 	LineRenderer line;
 	List<GameObject> buttonList = new List<GameObject>();
 	GameObject plate = null;
+	float lookAngle, tiltAngle ;
+
 
 	private void Start ()
 	{
@@ -117,6 +119,9 @@ public class PlayerControl : MonoBehaviour
 		if (plate != null)
 			DestroyObject (plate);
 		plate = Instantiate<GameObject> (ragdollPlates[0]);
+		lookAngle = 0;
+		tiltAngle = 0;
+
 		Vector3 directionPos = GetFuturePosition (0.2f);
 		plate.transform.position = myBody.transform.position + directionPos;
 	}
@@ -126,15 +131,9 @@ public class PlayerControl : MonoBehaviour
 		var x = CrossPlatformInputManager.GetAxis ("Horizontal");
 		var y = CrossPlatformInputManager.GetAxis ("Vertical");
 
-		float lookAngle = x * plateAngleSpeed;
-	
-		// Rotate the rig (the root object) around Y axis only:
-	
-
-			// on platforms with a mouse, we adjust the current angle based on Y mouse input and turn speed
-		float tiltAngle = y * plateAngleSpeed;
-			// and make sure the new value is within the tilt range
-			//tiltAngle = Mathf.Clamp (tiltAngle, -45, 75);
+		lookAngle += x * plateAngleSpeed;
+		tiltAngle += y * plateAngleSpeed;
+			tiltAngle = Mathf.Clamp (tiltAngle, -45, 75);
 		Quaternion transformTargetRot = Quaternion.Euler (tiltAngle, lookAngle, plate.transform.position.z);
 	
 		plate.transform.localRotation = transformTargetRot;
