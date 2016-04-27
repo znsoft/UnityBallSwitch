@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
 	List<GameObject> buttonList = new List<GameObject>();
 	GameObject plate = null;
 	float lookAngle, tiltAngle ;
+	public float futureTimeScale = 0.2f;
 
 
 	private void Start ()
@@ -42,13 +43,14 @@ public class PlayerControl : MonoBehaviour
 				DestroyObject (go);
 		buttonList.Clear ();
 		plate = null;
-
+		int plateCount = -1,platesCountMax = ragdollPlates.Length;
 		if(pause)foreach (var childPlace in butPanels.GetComponentsInChildren<Transform>()) {
 			//butPrefab.transform.localPosition = Vector3.zero;
 			if (childPlace.Equals (butPanels.transform))
 				continue;
+			if(++plateCount>=platesCountMax) break;
 			GameObject t = Instantiate (butPrefab);
-			t.name = "Button"+childPlace.gameObject.name;
+			t.name = plateCount.ToString();
 			t.transform.localPosition = childPlace.localPosition;
 			t.transform.position = childPlace.position;
 			//t.transform.parent = canvas.transform;
@@ -74,7 +76,7 @@ public class PlayerControl : MonoBehaviour
 	void DrawWay ()
 	{
 
-		var futurePosition = GetFuturePosition (0.2f);
+		var futurePosition = GetFuturePosition (futureTimeScale);
 		line.SetPosition (0, myBody.transform.position);
 		line.SetPosition (1, myBody.transform.position + futurePosition);
 		//Debug.DrawRay (transform.position, futurePosition, Color.red);
@@ -85,7 +87,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		Vector3 myVelocity = myRigidBody.velocity;
 		var gravity = Physics.gravity;
-		//float t = 0.2f;
+		//float t = futureTimeScale;
 		//forecast time
 		Vector3 futurePosition = myVelocity * t + (gravity * t * t) / 2;
 		return futurePosition;
@@ -110,19 +112,18 @@ public class PlayerControl : MonoBehaviour
 	public void ItemSelect (Button button)
 	{
 		Debug.Log (button.gameObject.name);
-
-		GenerateNewRing ();
+		GenerateNewRing (ragdollPlates[int.Parse(button.gameObject.name)]);
 	}
 
-	void GenerateNewRing ()
+	void GenerateNewRing (GameObject prefab)
 	{
 		if (plate != null)
 			DestroyObject (plate);
-		plate = Instantiate<GameObject> (ragdollPlates[0]);
+		plate = Instantiate<GameObject> (prefab);
 		lookAngle = 0;
 		tiltAngle = 0;
 
-		Vector3 directionPos = GetFuturePosition (0.2f);
+		Vector3 directionPos = GetFuturePosition (futureTimeScale);
 		plate.transform.position = myBody.transform.position + directionPos;
 	}
 
