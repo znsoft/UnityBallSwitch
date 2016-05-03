@@ -29,8 +29,11 @@ public class PushSpring : MonoBehaviour {
 			
 			StartCoroutine (ReturnPlate (10));
 		var touch = col.gameObject.GetComponent<Rigidbody> ();
-		touch.velocity = Vector3.zero;
-		touch.AddForce (directionForce, ForceMode.Impulse);;
+		if (touch != null) {
+				
+			touch.velocity = Vector3.zero;
+			touch.AddForce (directionForce, ForceMode.Impulse);
+		}
 	}
 
 }

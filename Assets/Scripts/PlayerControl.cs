@@ -10,13 +10,15 @@ public class PlayerControl : MonoBehaviour
 	//private Transform m_Cam;                  // A reference to the main camera in the scenes transform
 	//private Vector3 m_CamForward;             // The current forward direction of the camera
 	//private Vector3 m_Move;
-	private bool  pause = false;                      // the world-relative desired move direction, calculated from the camForward and user input.
+	private bool  pause = false; 
 	public GameObject myBody;
 	public GameObject buttonStop;
+	public GameObject butRestart;// the world-relative desired move direction, calculated from the camForward and user input.
 	public GameObject canvas;
 	public GameObject butPrefab;
 	public GameObject butPanels;
 	public GameObject[] ragdollPlates;
+	public Sprite[] platesImages;
 	Rigidbody myRigidBody;
 	public float plateAngleSpeed = 5;
 	//GameObject line;
@@ -55,6 +57,8 @@ public class PlayerControl : MonoBehaviour
 			t.transform.position = childPlace.position;
 			//t.transform.parent = canvas.transform;
 			t.transform.parent = childPlace;
+			Image buttonImage = t.gameObject.GetComponent<Image>();
+			buttonImage.sprite = platesImages[plateCount];
 			Button button = t.gameObject.GetComponent<Button>();	
 			button.onClick.AddListener(() => ItemSelect(button)); 
 			buttonList.Add(t);
@@ -140,6 +144,11 @@ public class PlayerControl : MonoBehaviour
 		plate.transform.localRotation = transformTargetRot;
 			//plate.transform.localRotation += transformTargetRot;
 
+	}
+
+	public void RestartLevel ()
+	{
+		Application.LoadLevel (Application.loadedLevelName);
 	}
 
 }
